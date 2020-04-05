@@ -13,6 +13,7 @@ import Button from "-/components/Button";
 import SideBanner from "-/components/SideBanner";
 import HideableSection from "-/components/HideableSection";
 import validate from "-/utils/validate";
+import { useStoreState, useStoreActions } from "-/lib/EasyPeasy";
 
 Yup.setLocale({
   mixed: {
@@ -32,6 +33,7 @@ const schema = Yup.object().shape({
 const Login = () => {
   const routes = useRouter();
   const [isExpanded, toggle] = useToggle(false);
+  const login = useStoreActions(state => state.user.login);
   const formRef = React.useRef<FormHandles>(null);
   const handleAdvance = async data => {
     if (!formRef.current) return;
@@ -41,6 +43,7 @@ const Login = () => {
       maxAge: 30 * 24 * 60 * 60,
       path: "/"
     });
+    login();
     routes.push("/");
   };
   return (
