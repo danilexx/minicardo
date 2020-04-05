@@ -13,6 +13,7 @@ import Button from "-/components/Button";
 import SideBanner from "-/components/SideBanner";
 import HideableSection from "-/components/HideableSection";
 import validate from "-/utils/validate";
+import { useStoreActions } from "-/lib/EasyPeasy";
 
 Yup.setLocale({
   mixed: {
@@ -36,6 +37,8 @@ const Register = () => {
   const routes = useRouter();
   const [isExpanded, toggle] = useToggle(false);
   const formRef = React.useRef<FormHandles>(null);
+  const login = useStoreActions(state => state.user.login);
+
   const handleAdvance = async data => {
     if (!formRef.current) return;
     const isValid = validate(schema, data, formRef);
@@ -58,6 +61,7 @@ const Register = () => {
         path: "/"
       });
       routes.push("/");
+      login();
     }
   };
   return (
