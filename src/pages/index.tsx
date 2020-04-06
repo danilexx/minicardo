@@ -15,7 +15,7 @@ const home = ({ trendingPosts, trendingDeliverymans }) => {
       <Title message="Minicardo" />
       <Banner />
       <SearchSection />
-      {trendingPosts.length > 0 && (
+      {trendingPosts.length > 0 && 
         <Featured label="Lojas Populares" seeMoreLink="/posts">
           <PostCards>
             {trendingPosts.map((user, index) => (
