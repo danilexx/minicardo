@@ -35,6 +35,7 @@ module.exports = {
     "react/no-array-index-key": "off",
     "react/no-unescaped-entities": "off",
     "jsx-a11y/alt-text": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   }
 };

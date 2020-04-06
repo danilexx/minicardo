@@ -8,21 +8,24 @@ const user: UserModel = {
   token: null,
   id: null,
   username: "",
-  type: "deliveryman",
+  icon: "",
+  type: null,
   login: action((state, payload) => {
     const decoded = jwt.decode(payload.token) as any;
-    const { id, name, type } = decoded;
+    const { id, name, type, icon } = decoded;
     state.isLogged = true;
     state.id = id;
+    state.icon = icon;
     state.token = payload.token;
     state.username = name;
     state.type = type;
   }),
-  logout: action((state, payload) => {
+  logout: action(state => {
     state.isLogged = false;
     state.id = null;
     state.username = "";
-    state.type = "deliveryman";
+    state.icon = "";
+    state.type = null;
     destroyCookie(null, "token");
   })
 };

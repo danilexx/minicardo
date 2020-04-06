@@ -5,7 +5,8 @@ export interface UserModel {
   token: string | null;
   id: number | null;
   username: string;
-  type: "deliveryman" | "trader";
+  icon: string;
+  type: "deliveryman" | "trader" | null;
   login: Action<UserModel, { token: string }>;
   logout: Action<UserModel>;
 }

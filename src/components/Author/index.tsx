@@ -9,29 +9,50 @@ import {
   Row,
   Zap,
   ZapIcon,
-  Number
+  Number,
+  Category,
+  Info
 } from "./styles";
+import { User } from "-/services";
 
-const Author = () => {
+interface Props {
+  user: User;
+  children?: React.ReactNode;
+}
+
+const Author: React.FC<Props> = ({ user, children }) => {
+  const {
+    icon,
+    name,
+    zap,
+    productType,
+    address: { cep, city, street, district, state }
+  } = user;
   return (
     <Container>
       <AuthorInfos>
         <Head>
-          <AuthorPic />
-          <Name>Evan Edwards</Name>
+          <AuthorPic src={icon?.url || "/images/samples/author.png"} />
+          <Info>
+            <Name>{name}</Name>
+            <Category>{productType}</Category>
+          </Info>
         </Head>
-        <Map />
+        {/* <Map /> */}
         <Content>
-          <Row>Rua Santos Vicent, 270</Row>
-          <Row>Alphaville - SP</Row>
-          <Row>Vila Madeira Roaman</Row>
-          <Row>08503-330</Row>
+          <Row>{street}</Row>
+          <Row>
+            {city} - {state}
+          </Row>
+          <Row>{district}</Row>
+          <Row>{cep}</Row>
         </Content>
       </AuthorInfos>
       <Zap>
         <ZapIcon />
-        <Number>11 55555-4444</Number>
+        <Number>{zap}</Number>
       </Zap>
+      {children}
     </Container>
   );
 };

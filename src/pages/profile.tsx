@@ -9,23 +9,40 @@ import PostSectionEdit from "-/components/PostSectionEdit";
 import { useStoreState } from "-/lib/EasyPeasy";
 import DeliverymanEdit from "-/components/DeliverymanEdit";
 import { ServerUser } from "-/services";
+import Footer from "-/components/Footer";
+import ViewButton from "-/components/ViewButton";
+import useUserRoute from "-/utils/hooks/useUserRoute";
 
 const Profile = ({ user }) => {
+  useUserRoute();
   const type = useStoreState(state => state.user.type);
   if (type === "deliveryman") {
-    return <DeliverymanEdit defaultValues={{ ...user, ...user.address }} />;
+    return (
+      <>
+        <DeliverymanEdit defaultValues={{ ...user.address, ...user }} />
+        <Footer />
+      </>
+    );
   }
-  return (
-    <Column>
-      <SearchBar />
-      <VesgoRow align="flex-start">
-        <PostSectionEdit
-          defaultValues={{ products: user.products, post: user.post }}
-        />
-        <AuthorEdit defaultValues={{ ...user, ...user.address }} />
-      </VesgoRow>
-    </Column>
-  );
+  if (type === "trader") {
+    return (
+      <>
+        <Column>
+          <SearchBar />
+          <VesgoRow align="flex-start">
+            <PostSectionEdit
+              defaultValues={{ products: user.products, post: user.post }}
+            >
+              <ViewButton href="/post/[id]" as={`/post/${user.id}`} />
+            </PostSectionEdit>
+            <AuthorEdit defaultValues={{ ...user.address, ...user }} />
+          </VesgoRow>
+        </Column>
+        <Footer />
+      </>
+    );
+  }
+  return null;
 };
 
 Profile.getInitialProps = async ctx => {

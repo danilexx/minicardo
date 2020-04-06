@@ -14,13 +14,9 @@ import SideSpace from "-/components/SideSpace";
 import Input, { MaskedInput } from "-/components/Input";
 import Button from "-/components/Button";
 import SideBanner from "-/components/SideBanner";
-import HideableSection from "-/components/HideableSection";
-import validate from "-/utils/validate";
-import { useStoreActions } from "-/lib/EasyPeasy";
-import SelectInput from "-/components/AsyncSelect";
-import ProductTypes from "-/lib/ProductTypes";
 import ImageDrop from "../ImageDrop";
 import { ServerUser, ServerFile } from "-/services";
+import ViewButton from "../ViewButton";
 
 Yup.setLocale({
   mixed: {
@@ -69,10 +65,11 @@ const DeliverymanEdit = ({ defaultValues }: any) => {
     };
     fn();
   }, [cep]);
+  const [isIconDefault, toggle] = useToggle(false);
   const handleAdvance = async data => {
     try {
       let iconId = null;
-      if (data.icon) {
+      if (data.icon && !isIconDefault) {
         const avatarResponse = await ServerFile.upload(data.icon);
         iconId = avatarResponse.data.id;
       }
@@ -94,6 +91,10 @@ const DeliverymanEdit = ({ defaultValues }: any) => {
       }
     }
   };
+
+  const handleDefault = value => {
+    toggle(value);
+  };
   return (
     <FormContext {...methods}>
       <Column>
@@ -103,6 +104,7 @@ const DeliverymanEdit = ({ defaultValues }: any) => {
               <ImageDrop
                 defaultValue={defaultValues.icon ? defaultValues.icon.url : ""}
                 name="icon"
+                handleDefault={handleDefault}
               />
               <Input
                 label="Nome"
@@ -124,7 +126,12 @@ const DeliverymanEdit = ({ defaultValues }: any) => {
               <Button type="submit">Atualizar</Button>
             </form>
           </SideSpace>
-          <SideBanner />
+          <SideBanner>
+            <ViewButton
+              href="/deliveryman/[id]"
+              as={`/deliveryman/${defaultValues.id}`}
+            />
+          </SideBanner>
         </VesgoRow>
       </Column>
     </FormContext>

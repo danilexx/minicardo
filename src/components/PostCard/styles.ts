@@ -23,28 +23,24 @@ export const CardHeader = styled.div`
   background-color: ${props => props.theme.primary};
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   align-items: center;
   padding: 1rem 2rem;
   max-height: 25rem;
 `;
 
-export const PostImage = styled.img.attrs({
-  src: "/images/samples/post.png"
-})`
+export const PostImage = styled.img`
   width: fit-content;
   height: auto;
   max-width: 100%;
-  margin: 0 auto;
+  margin: auto;
   border: 1px solid ${props => props.theme.borderGray};
   border-top: none;
 `;
 
-export const ProfileImage = styled.img.attrs({
-  src: "/images/samples/author.png"
-})`
+export const ProfileImage = styled.img`
   width: 4rem;
   height: 4rem;
+  border-radius: 50%;
 `;
 
 export const Info = styled.div`

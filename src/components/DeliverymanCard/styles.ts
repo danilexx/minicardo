@@ -16,15 +16,14 @@ export const Container = styled.div`
   flex: 1;
   min-width: 30rem;
   background-color: ${props => props.theme.black};
+  cursor: pointer;
 `;
 
-export const DeliverymanPhoto = styled.img.attrs({
-  src: "/images/samples/deliveryman.png"
-})`
+export const DeliverymanPhoto = styled.img`
   width: fit-content;
-  max-width: 100%;
-  margin: 0 auto;
   height: auto;
+  max-width: 100%;
+  margin: auto;
   border: 1px solid ${props => props.theme.borderGray};
   border-bottom: none;
 `;

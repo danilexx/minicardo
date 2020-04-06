@@ -1,6 +1,6 @@
 import { useForm, FormContext } from "react-hook-form";
 import Axios from "axios";
-import { useThrottle } from "react-use";
+import { useThrottle, useToggle } from "react-use";
 import { useEffect } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -69,17 +69,21 @@ const AuthorEdit = ({ defaultValues }) => {
     };
     fn();
   }, [cep]);
+  const [isPostDefault, toggle] = useToggle(false);
+  const handleDefault = value => {
+    toggle(value);
+  };
   const onSubmit = async data => {
     try {
       let iconId = null;
-      if (data.icon) {
+      if (data.icon && !isPostDefault) {
         const avatarResponse = await ServerFile.upload(data.icon);
         iconId = avatarResponse.data.id;
       }
       await ServerUser.update({
         ...data,
         icon: null,
-        iconId,
+        ...(isPostDefault ? {} : { iconId }),
         productType: data.productType.value,
         address: {
           cep: data.cep,
@@ -95,6 +99,7 @@ const AuthorEdit = ({ defaultValues }) => {
       }
     }
   };
+
   return (
     <Container>
       <AuthorInfos>
@@ -105,11 +110,12 @@ const AuthorEdit = ({ defaultValues }) => {
           <FormContext {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <ImageDrop
+                handleDefault={handleDefault}
                 defaultValue={defaultValues.icon ? defaultValues.icon.url : ""}
                 name="icon"
               />
               <Input
-                label="Nome"
+                label="Nome da sua Loja"
                 placeholder="ex: Jose"
                 name="name"
                 type="text"

@@ -17,6 +17,8 @@ import HideableSection from "-/components/HideableSection";
 import validate from "-/utils/validate";
 import { useStoreState, useStoreActions } from "-/lib/EasyPeasy";
 import { ServerUser } from "-/services";
+import Footer from "-/components/Footer";
+import useGuestRoute from "-/utils/hooks/useGuestRoute";
 
 Yup.setLocale({
   mixed: {
@@ -34,6 +36,7 @@ const schema = Yup.object().shape({
 });
 
 const Login = () => {
+  useGuestRoute();
   const routes = useRouter();
   const [isExpanded, toggle] = useToggle(false);
   const login = useStoreActions(state => state.user.login);
@@ -62,25 +65,28 @@ const Login = () => {
     }
   };
   return (
-    <Column style={{ minHeight: "69.5vh" }}>
-      <VesgoRow align="flex-start">
-        <SideSpace title="Cadastro">
-          <FormContext {...methods}>
-            <form onSubmit={handleSubmit(handleAdvance)}>
-              <Input
-                label="Email"
-                placeholder="ex: Jose@mail.com"
-                name="email"
-                type="email"
-              />
-              <Input label="Senha" name="password" type="password" />
-              <Button>Entrar</Button>
-            </form>
-          </FormContext>
-        </SideSpace>
-        <SideBanner />
-      </VesgoRow>
-    </Column>
+    <>
+      <Column style={{ minHeight: "69.5vh" }}>
+        <VesgoRow align="flex-start">
+          <SideSpace title="Cadastro">
+            <FormContext {...methods}>
+              <form onSubmit={handleSubmit(handleAdvance)}>
+                <Input
+                  label="Email"
+                  placeholder="ex: Jose@mail.com"
+                  name="email"
+                  type="email"
+                />
+                <Input label="Senha" name="password" type="password" />
+                <Button>Entrar</Button>
+              </form>
+            </FormContext>
+          </SideSpace>
+          <SideBanner />
+        </VesgoRow>
+      </Column>
+      <Footer style={{ marginTop: "4.8rem" }} />
+    </>
   );
 };
 

@@ -27,12 +27,17 @@ const schema = Yup.object().shape({
   name: Yup.string().required(),
   price: Yup.string().required()
 });
-const PostSectionEdit = ({ defaultValues }) => {
+interface Props {
+  defaultValues: any;
+  children: React.ReactNode;
+}
+
+const PostSectionEdit: React.FC<Props> = ({ defaultValues, children }) => {
   const methods = useForm({
     validationSchema: schema,
     defaultValues
   });
-  const { handleSubmit, register, control, getValues } = methods;
+  const { handleSubmit, register, control, getValues, setValue } = methods;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "products"
@@ -47,6 +52,8 @@ const PostSectionEdit = ({ defaultValues }) => {
     } = await ServerProduct.create(newProduct);
     newProduct.id = id;
     append(data);
+    setValue("name", "");
+    setValue("price", "");
   };
   const handleUpdate = async () => {
     const { products } = getValues({ nest: true });
@@ -90,6 +97,7 @@ const PostSectionEdit = ({ defaultValues }) => {
                 name="price"
                 size="30%"
                 placeholder="Preço"
+                step="0.05"
                 type="number"
               />
               <AppendButton size="20%">
@@ -140,6 +148,7 @@ const PostSectionEdit = ({ defaultValues }) => {
           </Button>
         </Rows>
       </Content>
+      {children}
     </Container>
   );
 };

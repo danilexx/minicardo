@@ -38,7 +38,7 @@ const ProfileIndicator = () => {
         toggle();
       }}
     >
-      <ProfileImage />
+      <ProfileImage src={user.icon || "/images/samples/author.png"} />
       <ProfileName>{user.username}</ProfileName>
       <Arrow flipped={isPopupActive} />
       <Popup active={isPopupActive}>

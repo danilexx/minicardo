@@ -13,9 +13,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Image = styled.img.attrs({
-  src: "/images/samples/post.png"
-})`
+export const Image = styled.img`
   width: 100%;
   max-width: 400px;
   display: block;
@@ -81,4 +79,13 @@ export const ProductPrice = styled.div`
   width: 20%;
   color: ${props => props.theme.secondary};
   ${common}
+`;
+
+export const None = styled.div`
+  width: 100%;
+  border: 1px solid ${props => props.theme.borderGray};
+  background-color: ${props => props.theme.white};
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem 0;
 `;

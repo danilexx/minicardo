@@ -27,8 +27,10 @@ const Nav = () => {
         <Container>
           <Column>
             <VesgoRow>
-              <Link href="/">
-                <Logo />
+              <Link href="/" passHref>
+                <a href="#">
+                  <Logo />
+                </a>
               </Link>
               <MenuButton
                 onClick={() => {
@@ -39,7 +41,7 @@ const Nav = () => {
           </Column>
           <Menu active={isMenuActive}>
             <Link href="/posts" passHref>
-              <Anchor>Produtos</Anchor>
+              <Anchor>Lojas</Anchor>
             </Link>
             <Link href="/deliverymans" passHref>
               <Anchor>Entregadores</Anchor>
@@ -65,12 +67,14 @@ const Nav = () => {
     <Container>
       <Column>
         <VesgoRow>
-          <Link href="/">
-            <Logo />
+          <Link href="/" passHref>
+            <a href="#">
+              <Logo />
+            </a>
           </Link>
           <Actions>
             <Link href="/posts" passHref>
-              <Anchor>Produtos</Anchor>
+              <Anchor>Lojas</Anchor>
             </Link>
             <Link href="/deliverymans" passHref>
               <Anchor>Entregadores</Anchor>
