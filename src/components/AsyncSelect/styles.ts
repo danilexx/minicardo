@@ -19,5 +19,5 @@ export const Select = styled(BaseSelect)`
 
 export const Spacer = styled.div`
   width: fit-content;
-  margin: 0 1.5rem;
+  margin: 0 auto;
 `;

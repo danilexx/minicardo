@@ -7,7 +7,7 @@ export const Container = styled.div`
   width: 40%;
   max-width: 40rem;
   min-width: 200px;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
 
   @media screen and (max-width: 480px) {
     width: 100%;
@@ -28,29 +28,48 @@ export const Head = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 1rem 1rem;
-  height: 4rem;
+  justify-content: flex-start;
+  padding: 1rem 3rem;
+  /* height: 4rem; */
   position: relative;
   @media screen and (max-width: 480px) {
     margin-top: 2rem;
   }
 `;
 
-export const AuthorPic = styled.img.attrs({
-  src: "/images/samples/author.png"
-})`
+export const AuthorPic = styled.img`
   width: 6rem;
   height: 6rem;
-  top: -50%;
-  transform: translateY(50%);
-  left: 2rem;
-  position: absolute;
+  border-radius: 50%;
+  /* top: -50%; */
+  /* transform: translateY(50%); */
+  display: block;
+  /* margin: 1rem; */
+  /* margin-bottom: 2rem; */
+  /* position: absolute; */
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
 `;
 
 export const Name = styled.p`
-  font-size: 2rem;
+  font-size: 2.4rem;
+  font-weight: 400;
+  letter-spacing: 0.2rem;
   color: ${props => props.theme.white};
+  text-transform: capitalize;
+  margin: 0;
+`;
+
+export const Category = styled.p`
+  font-size: 1.8rem;
+  letter-spacing: 0.2rem;
+  color: ${props => props.theme.white};
+  text-transform: capitalize;
+  margin: 0;
 `;
 
 export const Map = styled.img.attrs({
@@ -66,7 +85,7 @@ export const Content = styled.div`
 `;
 
 export const Row = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: ${props => props.theme.black};
   margin-bottom: 0.2rem;
 `;

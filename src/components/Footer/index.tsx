@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Column from "../Colunm";
 import {
   Container,
@@ -10,19 +11,21 @@ import {
   FooterRow
 } from "./styles";
 
-const Footer = () => {
+const Footer = ({ ...props }: any) => {
   return (
-    <Container>
+    <Container {...props}>
       <Column>
         <FooterRow>
           <Sections>
             <Logo />
             <Section>
               <SectionTitle>Seções</SectionTitle>
-              <Anchor>Produtos</Anchor>
-              <Anchor>Entregadores</Anchor>
-              <Anchor>Login</Anchor>
-              <Anchor>Cadastro</Anchor>
+              <Link href="/posts" passHref>
+                <Anchor>Produtos</Anchor>
+              </Link>
+              <Link href="/deliverymans" passHref>
+                <Anchor>Entregadores</Anchor>
+              </Link>
             </Section>
             <Section>
               <SectionTitle>Redes Sociais</SectionTitle>

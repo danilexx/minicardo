@@ -4,35 +4,51 @@ import SearchSection from "-/components/SearchSection";
 import PostHeader from "-/components/PostHeader";
 import Featured from "-/components/Featured";
 import PostCard, { PostCards } from "-/components/PostCard";
-import { DeliverymanCards } from "-/components/DeliverymanCard/styles";
-import DeliverymanCard from "-/components/DeliverymanCard";
+import DeliverymanCard, {
+  DeliverymanCards
+} from "-/components/DeliverymanCard";
+import { ServerTrendingPosts, ServerTrendingDeliverymans } from "-/services";
+import Footer from "-/components/Footer";
 
-const home = () => {
+const home = ({ trendingPosts, trendingDeliverymans }) => {
   return (
     <>
-      <ReactTooltip clickable backgroundColor="#1BD741" />
       <Banner />
       <SearchSection />
-      <Featured label="Posts Populares" seeMoreLink="posts">
-        <PostCards>
-          {[...Array(3)].map((_, index) => (
-            <PostCard key={index} />
-          ))}
-        </PostCards>
-      </Featured>
-      <Featured
-        label="Entregadores em Destaque"
-        secondary
-        seeMoreLink="deliverymans"
-      >
-        <DeliverymanCards>
-          {[...Array(3)].map((_, index) => (
-            <DeliverymanCard key={index} />
-          ))}
-        </DeliverymanCards>
-      </Featured>
+      {trendingPosts.length > 0 && (
+        <Featured label="Posts Populares" seeMoreLink="/posts">
+          <PostCards>
+            {trendingPosts.map((user, index) => (
+              <PostCard key={index} user={user} />
+            ))}
+          </PostCards>
+        </Featured>
+      )}
+      {trendingDeliverymans.length > 0 && (
+        <Featured
+          label="Entregadores em Destaque"
+          secondary
+          seeMoreLink="/deliverymans"
+        >
+          <DeliverymanCards>
+            {trendingDeliverymans.map((user, index) => (
+              <DeliverymanCard user={user} key={index} />
+            ))}
+          </DeliverymanCards>
+        </Featured>
+      )}
+      <Footer />
     </>
   );
+};
+
+home.getInitialProps = async ctx => {
+  const { data: trendingPosts } = await ServerTrendingPosts.get();
+  const { data: trendingDeliverymans } = await ServerTrendingDeliverymans.get();
+  return {
+    trendingPosts,
+    trendingDeliverymans
+  };
 };
 
 export default home;

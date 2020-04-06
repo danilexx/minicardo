@@ -24,7 +24,7 @@ interface Props {
   defaultValue?: any;
 }
 
-const CustomLoadingIndicator = () => {
+export const CustomLoadingIndicator = () => {
   return (
     <Spacer>
       <Spinner loading />

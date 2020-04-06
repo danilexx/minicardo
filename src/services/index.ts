@@ -36,6 +36,44 @@ interface ProductData {
   price: number;
 }
 
+interface Post {
+  name: string;
+  post?: {
+    url: string;
+  };
+  icon?: {
+    url: string;
+  };
+}
+
+interface PostsGetData {
+  users: Post[];
+  total: number;
+  currentPage: number;
+  pages: number;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  productType: string;
+  post?: {
+    url: string;
+  };
+  icon?: {
+    url: string;
+  };
+  zap: string;
+  address: {
+    cep: string;
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+  };
+  products: ProductData[];
+}
+
 const bearer = (ssrToken?: string) => {
   const { token } = parseCookies();
   return {
@@ -63,4 +101,25 @@ export const ServerProduct = {
 export const ServerFile = {
   upload: async (file: File) =>
     api.post("/files", getFileFormData(file), bearer())
+};
+
+export const ServerPosts = {
+  get: ({ searchParams, page = 1 }: { searchParams: string; page: number }) =>
+    api.get<PostsGetData>(
+      `/posts?page=${page}&searchParams=${searchParams}&type=trader&=itemsPerPage=9`
+    ),
+  getOne: id => api.get<User>(`/posts/${id}`)
+};
+export const ServerDeliverymans = {
+  get: ({ searchParams, page = 1 }: { searchParams: string; page: number }) =>
+    api.get<PostsGetData>(
+      `/posts?page=${page}&searchParams=${searchParams}&type=deliveryman&=itemsPerPage=9`
+    ),
+  getOne: id => api.get<User>(`/posts/${id}`)
+};
+export const ServerTrendingPosts = {
+  get: () => api.get<Post[]>(`/trendingUsers?&type=trader`)
+};
+export const ServerTrendingDeliverymans = {
+  get: () => api.get<Post[]>(`/trendingUsers?&type=deliveryman`)
 };

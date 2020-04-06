@@ -7,37 +7,44 @@ import {
   Rows,
   Row,
   ProductPrice,
-  ProductName
+  ProductName,
+  None
 } from "./styles";
+import { User } from "-/services";
+import { useStoreState } from "-/lib/EasyPeasy";
+import EditButton from "../EditButton";
 
-const PostSection = () => {
+interface Props {
+  user: User;
+}
+
+const PostSection: React.FC<Props> = ({ user }) => {
+  const { products, post, id } = user;
+  const userId = useStoreState(state => state.user.id);
   return (
     <Container>
-      <Image />
+      <Image src={post?.url || "/images/samples/post.png"} />
       <Content>
-        <Head>
-          <Cell size="80%">Produto</Cell>
-          <Cell size="20%">Preço</Cell>
-        </Head>
-        <Rows>
-          <Row>
-            <ProductName>Ovo de Pascoa Recheado de Hershey’s</ProductName>
-            <ProductPrice>R$ 80,00</ProductPrice>
-          </Row>
-          <Row>
-            <ProductName>Ovo de Pascoa Recheado de Hershey’s</ProductName>
-            <ProductPrice>R$ 80,00</ProductPrice>
-          </Row>
-          <Row>
-            <ProductName>Ovo de Pascoa Recheado de Hershey’s</ProductName>
-            <ProductPrice>R$ 80,00</ProductPrice>
-          </Row>
-          <Row>
-            <ProductName>Ovo de Pascoa Recheado de Hershey’s</ProductName>
-            <ProductPrice>R$ 80,00</ProductPrice>
-          </Row>
-        </Rows>
+        {products.length > 0 ? (
+          <>
+            <Head>
+              <Cell size="80%">Produto</Cell>
+              <Cell size="20%">Preço</Cell>
+            </Head>
+            <Rows>
+              {products.map(({ id: productId, name, price }) => (
+                <Row key={productId}>
+                  <ProductName>{name}</ProductName>
+                  <ProductPrice>{price}</ProductPrice>
+                </Row>
+              ))}
+            </Rows>
+          </>
+        ) : (
+          <None>Nenhum Produto Cadastrado Ainda</None>
+        )}
       </Content>
+      {id === userId && <EditButton href="/profile" />}
     </Container>
   );
 };

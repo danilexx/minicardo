@@ -27,3 +27,9 @@ export const SearchIcon = styled.img.attrs({
   width: 2rem;
   height: 2rem;
 `;
+
+export const Form = styled.form`
+  width: 100%;
+  flex: 1;
+  display: flex;
+`;

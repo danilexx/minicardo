@@ -1,12 +1,14 @@
+import Link from "next/link";
 import { Container, CategoryName } from "./styles";
 
 export { Categories } from "./styles";
-
-const CategoryCard = () => {
+const CategoryCard = ({ type, img }) => {
   return (
-    <Container>
-      <CategoryName>Moda</CategoryName>
-    </Container>
+    <Link href={`/posts?search=${type}`}>
+      <Container image={img}>
+        <CategoryName>{type}</CategoryName>
+      </Container>
+    </Link>
   );
 };
 

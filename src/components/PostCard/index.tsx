@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import ReactTooltip from "react-tooltip";
 import Link from "next/link";
 import {
   Container,
@@ -15,28 +15,49 @@ import { ThemeContext } from "-/lib/StyledComponents";
 
 export { PostCards } from "./styles";
 
-const PostCard = () => {
+interface User {
+  id: number;
+  name: string;
+  productType: string;
+  zap: string;
+  post?: {
+    url: string;
+  };
+  icon?: {
+    url: string;
+  };
+}
+
+interface Props {
+  user: User;
+}
+
+const PostCard: React.FC<Props> = ({ user }) => {
+  const { id, name, productType, zap, post, icon } = user;
   return (
-    <Link href="/post/[id]" as="/post/1">
-      <Container>
-        <CardHeader>
-          <ProfileImage />
-          <Info>
-            <Name>Evan Edwards</Name>
-            <Category>Feitos em Casa</Category>
-          </Info>
-          <Zap
-            data-type="light"
-            data-class="zap-tool"
-            data-tip="11 55555-4444"
-            data-effect="solid"
-          >
-            <ZapImage />
-          </Zap>
-        </CardHeader>
-        <PostImage />
-      </Container>
-    </Link>
+    <>
+      <Link href="/post/[id]" as={`/post/${id}`}>
+        <Container>
+          <CardHeader>
+            <ProfileImage src={icon?.url || "/images/samples/author.png"} />
+            <Info>
+              <Name>{name}</Name>
+              <Category>{productType}</Category>
+            </Info>
+            <Zap
+              data-type="light"
+              data-class="zap-tool"
+              data-tip={zap}
+              data-effect="solid"
+            >
+              <ZapImage />
+            </Zap>
+          </CardHeader>
+          <PostImage src={post?.url || "/images/samples/post.png"} />
+        </Container>
+      </Link>
+      <ReactTooltip clickable backgroundColor="#1BD741" />
+    </>
   );
 };
 

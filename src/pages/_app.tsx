@@ -10,7 +10,6 @@ import { theme } from "-/lib/theme";
 import Fonts from "-/utils/fonts";
 import { makeStore } from "-/store";
 import Nav from "-/components/Nav";
-import Footer from "-/components/Footer";
 import "react-toastify/dist/ReactToastify.css";
 
 // Call it once in your app. At the root of your app is the best place
@@ -56,9 +55,7 @@ class MyApp extends App<{ store: any }> {
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           <Nav />
-
           <Component {...pageProps} />
-          <Footer />
         </ThemeProvider>
       </StoreProvider>
     );

@@ -10,11 +10,10 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const ProfileImage = styled.img.attrs({
-  src: "/images/samples/author.png"
-})`
+export const ProfileImage = styled.img`
   width: 4rem;
   height: 4rem;
+  border-radius: 50%;
 `;
 
 export const Arrow = styled.img.attrs({
@@ -34,6 +33,7 @@ export const ProfileName = styled.p`
 
 export const Popup = styled.div<{ active: boolean }>`
   opacity: ${props => (props.active ? 1 : 0)};
+  pointer-events: ${props => (props.active ? "all" : "none")};
   width: 100%;
   background-color: ${props => darken(0.1, props.theme.primary)};
   display: flex;
