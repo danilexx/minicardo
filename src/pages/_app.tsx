@@ -3,6 +3,7 @@ import React from "react";
 import withRedux from "next-redux-wrapper";
 import { StoreProvider } from "easy-peasy";
 import { parseCookies } from "nookies";
+import { toast } from "react-toastify";
 import { ThemeProvider } from "-/lib/StyledComponents";
 import { GlobalStyles } from "-/lib/GlobalStyles";
 import { theme } from "-/lib/theme";
@@ -10,7 +11,15 @@ import Fonts from "-/utils/fonts";
 import { makeStore } from "-/store";
 import Nav from "-/components/Nav";
 import Footer from "-/components/Footer";
+import "react-toastify/dist/ReactToastify.css";
 
+// Call it once in your app. At the root of your app is the best place
+toast.configure({
+  className: "minicardo-error-toast",
+  bodyClassName: "minicardo-error-toast",
+  toastClassName: "minicardo-error-toast",
+  autoClose: 8000
+});
 interface it {
   Component: any;
   ctx: any;
@@ -22,8 +31,8 @@ class MyApp extends App<{ store: any }> {
   async componentDidMount() {
     Fonts();
     const cookies = parseCookies(null);
-    if (cookies.token === "true") {
-      this.props.store.getActions().user.login();
+    if (cookies.token) {
+      this.props.store.getActions().user.login({ token: cookies.token });
     }
   }
 

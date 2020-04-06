@@ -45,6 +45,7 @@ export const Popup = styled.div<{ active: boolean }>`
 `;
 
 export const PopupAnchor = styled.a<{ exit?: boolean }>`
+  text-decoration: none;
   font-size: 1.5rem;
   color: ${props => props.theme.white};
   width: 100%;

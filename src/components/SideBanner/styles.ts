@@ -1,12 +1,14 @@
 import styled from "-/lib/StyledComponents";
 
 export const Container = styled.div`
-  background-color: #0051ad;
+  /* background-color: #0051ad; */
   /* background-color: ${props => props.theme.black}; */
   width: 55%;
   max-width: 800px;
   margin: 2rem 0;
-  
+  height: fit-content;
+  cursor: pointer;
+
   @media screen and (max-width: 642px) {
     width: 100%;
     margin: 1rem auto;

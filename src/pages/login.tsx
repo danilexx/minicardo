@@ -5,6 +5,8 @@ import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
+import { useForm, FormContext } from "react-hook-form";
+import { toast } from "react-toastify";
 import Column from "-/components/Colunm";
 import VesgoRow from "-/components/VesgoRow";
 import SideSpace from "-/components/SideSpace";
@@ -14,6 +16,7 @@ import SideBanner from "-/components/SideBanner";
 import HideableSection from "-/components/HideableSection";
 import validate from "-/utils/validate";
 import { useStoreState, useStoreActions } from "-/lib/EasyPeasy";
+import { ServerUser } from "-/services";
 
 Yup.setLocale({
   mixed: {
@@ -34,32 +37,46 @@ const Login = () => {
   const routes = useRouter();
   const [isExpanded, toggle] = useToggle(false);
   const login = useStoreActions(state => state.user.login);
-  const formRef = React.useRef<FormHandles>(null);
+  const methods = useForm({
+    validationSchema: schema
+  });
+  const { handleSubmit } = methods;
   const handleAdvance = async data => {
-    if (!formRef.current) return;
-    const isValid = validate(schema, data, formRef);
-    if (!isValid) return;
-    setCookie(null, "token", "true", {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/"
-    });
-    login();
-    routes.push("/");
+    try {
+      const {
+        data: { token }
+      } = await ServerUser.login({
+        email: data.email,
+        password: data.password
+      });
+      setCookie(null, "token", token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/"
+      });
+      login({ token });
+      routes.push("/");
+    } catch (err) {
+      if (err.response?.data?.error) {
+        toast(err.response.data?.error);
+      }
+    }
   };
   return (
     <Column style={{ minHeight: "69.5vh" }}>
       <VesgoRow align="flex-start">
         <SideSpace title="Cadastro">
-          <Form ref={formRef} onSubmit={handleAdvance}>
-            <Input
-              label="Email"
-              placeholder="ex: Jose@mail.com"
-              name="email"
-              type="email"
-            />
-            <Input label="Senha" name="password" type="password" />
-            <Button>Entrar</Button>
-          </Form>
+          <FormContext {...methods}>
+            <form onSubmit={handleSubmit(handleAdvance)}>
+              <Input
+                label="Email"
+                placeholder="ex: Jose@mail.com"
+                name="email"
+                type="email"
+              />
+              <Input label="Senha" name="password" type="password" />
+              <Button>Entrar</Button>
+            </form>
+          </FormContext>
         </SideSpace>
         <SideBanner />
       </VesgoRow>

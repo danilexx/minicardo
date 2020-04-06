@@ -79,4 +79,13 @@ export const GlobalStyles = createGlobalStyle`
   .__react_component_tooltip.show.zap-tool{
     opacity: 1;
   }
+
+  .Toastify__toast.Toastify__toast--default.minicardo-error-toast {
+    background: ${props => props.theme.danger};
+  }
+  .Toastify__toast-body.minicardo-error-toast {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+  }
 `;

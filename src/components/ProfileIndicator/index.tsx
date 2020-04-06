@@ -1,4 +1,5 @@
 import { useToggle, useMedia } from "react-use";
+import Link from "next/link";
 import { useStoreState, useStoreActions } from "-/lib/EasyPeasy";
 import {
   Container,
@@ -39,7 +40,9 @@ const ProfileIndicator = () => {
       <ProfileName>{user.username}</ProfileName>
       <Arrow flipped={isPopupActive} />
       <Popup active={isPopupActive}>
-        <PopupAnchor>Perfil</PopupAnchor>
+        <Link href="/profile" passHref>
+          <PopupAnchor>Perfil</PopupAnchor>
+        </Link>
         <PopupAnchor
           exit
           onClick={() => {

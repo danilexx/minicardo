@@ -1,4 +1,4 @@
-import BaseSelect from "react-select/async";
+import BaseSelect from "react-select";
 import styled from "-/lib/StyledComponents";
 
 export const Select = styled(BaseSelect)`
