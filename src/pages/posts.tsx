@@ -83,9 +83,9 @@ const Posts = ({
             next={fetchMoreData}
             hasMore={page !== pages}
             loader={CustomLoadingIndicator}
-            endMessage={
-              <EndMessage> Você visualizou todos os posts</EndMessage>
-            }
+            // endMessage={
+            //   <EndMessage> Você visualizou todas as lojas</EndMessage>
+            // }
           >
             <PostCards>
               {posts.map((user, index) => (
