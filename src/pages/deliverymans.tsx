@@ -92,9 +92,9 @@ const Posts = ({
             next={fetchMoreData}
             hasMore={page !== pages}
             loader={CustomLoadingIndicator}
-            endMessage={
-              <EndMessage> Você visualizou todos os entregadores</EndMessage>
-            }
+            // endMessage={
+            //   <EndMessage> Você visualizou todos os entregadores</EndMessage>
+            // }
           >
             <DeliverymanCards>
               {deliverymans.map((user, index) => (

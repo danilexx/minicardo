@@ -29,8 +29,13 @@ const Footer = ({ ...props }: any) => {
             </Section>
             <Section>
               <SectionTitle>Redes Sociais</SectionTitle>
-              <Anchor>Facebook</Anchor>
-              <Anchor>Twitter</Anchor>
+              <Anchor
+                href="https://www.instagram.com/_minicardo/"
+                target="_blank"
+              >
+                Instagram
+              </Anchor>
+              {/* <Anchor>Twitter</Anchor> */}
             </Section>
           </Sections>
           <Copyright href="/services">
