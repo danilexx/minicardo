@@ -1,7 +1,7 @@
 import { useForm, FormContext } from "react-hook-form";
 import Axios from "axios";
 import { useThrottle, useToggle } from "react-use";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import {
@@ -41,21 +41,24 @@ const schema = Yup.object().shape({
     .required(),
   zap: Yup.string()
     .min(15)
-    .required()
+    .required(),
+  street: Yup.string().required(),
+  district: Yup.string().required(),
+  city: Yup.string().required(),
+  state: Yup.string().required()
 });
 const AuthorEdit = ({ defaultValues }) => {
   const methods = useForm({
     defaultValues,
     validationSchema: schema
   });
-  const { handleSubmit, watch, setValue } = methods;
+  const { handleSubmit, watch, setValue, setError, clearError } = methods;
   const cepValue = watch("cep");
   const cep = useThrottle(cepValue, 1000);
-  useEffect(() => {
-    const fn = async () => {
+  const fetchCep = useCallback(
+    async value => {
       try {
-        if (cep.length < 9) return;
-        const cleanCep = cep.replace("-", "");
+        const cleanCep = value.replace("-", "");
         const { data: localInfo } = await Axios.get(
           `https://viacep.com.br/ws/${cleanCep}/json/`
         );
@@ -64,8 +67,19 @@ const AuthorEdit = ({ defaultValues }) => {
         setValue("state", localInfo.uf);
         setValue("city", localInfo.localidade);
       } catch (error) {
-        console.error(error);
+        setValue("street", "");
+        setValue("district", "");
+        setValue("state", "");
+        setValue("city", "");
       }
+    },
+    [setValue, setError, clearError]
+  );
+  useEffect(() => {
+    const fn = async () => {
+      if (cep && cep.length < 9) return;
+
+      await fetchCep(cep);
     };
     fn();
   }, [cep]);
@@ -99,7 +113,6 @@ const AuthorEdit = ({ defaultValues }) => {
       }
     }
   };
-
   return (
     <Container>
       <AuthorInfos>
