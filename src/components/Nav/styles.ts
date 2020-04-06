@@ -8,6 +8,7 @@ export const Container = styled.div`
   padding: 1rem 0;
   top: 0;
   z-index: 50;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 650px) {
     height: 8rem;
     display: flex;

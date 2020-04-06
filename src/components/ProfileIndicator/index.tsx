@@ -18,7 +18,9 @@ const ProfileIndicator = () => {
   if (isSmall) {
     return (
       <>
-        <PopupAnchor>Perfil</PopupAnchor>
+        <Link href="/profile" passHref>
+          <PopupAnchor>Perfil</PopupAnchor>
+        </Link>
         <PopupAnchor
           exit
           onClick={() => {
