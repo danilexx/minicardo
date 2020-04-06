@@ -12,6 +12,7 @@ import { ServerUser } from "-/services";
 import Footer from "-/components/Footer";
 import ViewButton from "-/components/ViewButton";
 import useUserRoute from "-/utils/hooks/useUserRoute";
+import Title from "-/components/Title";
 
 const Profile = ({ user }) => {
   useUserRoute();
@@ -19,6 +20,8 @@ const Profile = ({ user }) => {
   if (type === "deliveryman") {
     return (
       <>
+        <Title message="Perfil" />
+
         <DeliverymanEdit defaultValues={{ ...user.address, ...user }} />
         <Footer />
       </>
@@ -27,6 +30,8 @@ const Profile = ({ user }) => {
   if (type === "trader") {
     return (
       <>
+        <Title message="Perfil" />
+
         <Column>
           <SearchBar />
           <VesgoRow align="flex-start">
@@ -42,7 +47,11 @@ const Profile = ({ user }) => {
       </>
     );
   }
-  return null;
+  return (
+    <>
+      <Title message="Perfil" />
+    </>
+  );
 };
 
 Profile.getInitialProps = async ctx => {

@@ -1,9 +1,9 @@
 import { darken } from "polished";
 import styled from "-/lib/StyledComponents";
 
-export const Container = styled.div`
+export const Container = styled.div<{ bgColor: string }>`
   display: block;
-  background-color: #4a839c;
+  background-color: ${props => props.bgColor};
   width: 100%;
 
   /* height: 20rem; */

@@ -5,16 +5,20 @@ import SearchBar from "-/components/SearchBar";
 import Author from "-/components/Author";
 import { ServerPosts } from "-/services";
 import DefaultSearchBar from "-/components/SearchBar/default";
+import Title from "-/components/Title";
 
 const Post = ({ user }) => {
   return (
-    <Column>
-      <DefaultSearchBar />
-      <VesgoRow align="flex-start">
-        <PostSection user={user} />
-        <Author user={user} />
-      </VesgoRow>
-    </Column>
+    <>
+      <Title message={user.name} />
+      <Column>
+        <DefaultSearchBar />
+        <VesgoRow align="flex-start">
+          <PostSection user={user} />
+          <Author user={user} />
+        </VesgoRow>
+      </Column>
+    </>
   );
 };
 

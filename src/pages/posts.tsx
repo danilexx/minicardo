@@ -11,6 +11,7 @@ import { ServerPosts } from "-/services";
 import ScrollableWrapper from "-/components/ScrollableWrapper";
 import { EndMessage } from "-/components/EndMessage";
 import Results from "-/components/Results";
+import Title from "-/components/Title";
 
 const Posts = ({
   initialPosts = [],
@@ -65,6 +66,7 @@ const Posts = ({
   };
   return (
     <>
+      <Title message="Minicardo" />
       <Column>
         <SearchBar
           value={search}

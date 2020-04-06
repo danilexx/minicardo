@@ -14,6 +14,7 @@ import DeliverymanCard, {
   DeliverymanCards
 } from "-/components/DeliverymanCard";
 import Results from "-/components/Results";
+import Title from "-/components/Title";
 
 const Posts = ({
   initialPosts = [],
@@ -72,6 +73,8 @@ const Posts = ({
   };
   return (
     <>
+      <Title message="Entregadores" />
+
       <Column>
         <SearchBar
           value={search}

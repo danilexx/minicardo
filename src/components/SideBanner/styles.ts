@@ -1,9 +1,10 @@
 import { darken } from "polished";
 import styled from "-/lib/StyledComponents";
 
-export const Container = styled.div`
+export const Container = styled.div<{ bgColor: string }>`
   /* background-color: #0051ad; */
   /* background-color: ${props => props.theme.black}; */
+  background-color: ${props => props.bgColor};
   width: 55%;
   max-width: 800px;
   margin: 2rem 0;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DisplayImage, Container, Bottom, Recs, Rec } from "./styles";
+import { colors } from "-/lib/colors";
 
 const images = ["/images/covid.png", "/images/doar.jpeg"];
 const links = ["/covid", "https://www.atados.com.br/doe"];
@@ -25,7 +26,7 @@ const Banner = () => {
     setIndex(index);
   };
   return (
-    <Container>
+    <Container bgColor={colors[currentIndex]}>
       <Link href={currentLink} passHref>
         <a target="_blank">
           <DisplayImage src={currentImage} />
