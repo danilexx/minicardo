@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useField } from "@unform/core";
+import { useFormContext, Controller } from "react-hook-form";
 import {
   StyledInput,
   StyledLabel,
@@ -21,32 +22,29 @@ const Input: React.FC<InputProps> = ({
   width = "100%",
   ...rest
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
-  useEffect(() => {
-    registerField({
-      name: fieldName,
-      path: "value",
-      ref: inputRef.current
-    });
-  }, [fieldName, registerField]);
+  const { register, errors } = useFormContext();
+  // const inputRef = useRef<HTMLInputElement>(null);
+  // const { fieldName, defaultValue, registerField, error } = useField(name);
+  // useEffect(() => {
+  //   registerField({
+  //     name: fieldName,
+  //     path: "value",
+  //     ref: inputRef.current
+  //   });
+  // }, [fieldName, registerField]);
   return (
     <Container
       style={{
         width
       }}
     >
-      {label && <StyledLabel htmlFor={fieldName}>{label}</StyledLabel>}
-      <StyledInput
-        id={fieldName}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {label && <StyledLabel htmlFor={name}>{label}</StyledLabel>}
+      <StyledInput id={name} name={name} ref={register} {...rest} />
+      {errors[name] && <ErrorMessage>{errors[name].message}</ErrorMessage>}
     </Container>
   );
 };
+
 export const MaskedInput: React.FC<{ mask: string } & InputProps> = ({
   name,
   label,
@@ -54,32 +52,33 @@ export const MaskedInput: React.FC<{ mask: string } & InputProps> = ({
   mask,
   ...rest
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
-  useEffect(() => {
-    registerField({
-      name: fieldName,
-      path: "value",
-      ref: inputRef.current
-    });
-  }, [fieldName, registerField]);
+  // const inputRef = useRef<HTMLInputElement>(null);
+  // const { fieldName, defaultValue, registerField, error } = useField(name);
+  const { control, errors } = useFormContext();
+  // useEffect(() => {
+  //   registerField({
+  //     name: fieldName,
+  //     path: "value",
+  //     ref: inputRef.current
+  //   });
+  // }, [fieldName, registerField]);
   return (
     <Container
       style={{
         width
       }}
     >
-      {label && <StyledLabel htmlFor={fieldName}>{label}</StyledLabel>}
-
-      <StyledMaskInput
-        mask={mask}
-        id={fieldName}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
+      {label && <StyledLabel htmlFor={name}>{label}</StyledLabel>}
+      <Controller
+        as={<StyledMaskInput mask={mask} />}
+        name={name}
+        control={control}
+        onChange={([e]) => {
+          return e.target.value;
+        }}
       />
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {errors[name] && <ErrorMessage>{errors[name].message}</ErrorMessage>}
     </Container>
   );
 };

@@ -1,10 +1,13 @@
+import Link from "next/link";
 import { DisplayImage, Container } from "./styles";
 
 const SideBanner = () => {
   return (
-    <Container>
-      <DisplayImage src="/images/covid.png" />
-    </Container>
+    <Link href="/covid">
+      <Container>
+        <DisplayImage src="/images/covid.png" />
+      </Container>
+    </Link>
   );
 };
 
