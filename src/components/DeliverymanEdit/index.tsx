@@ -35,7 +35,11 @@ const schema = Yup.object().shape({
     .required(),
   zap: Yup.string()
     .min(15)
-    .required()
+    .required(),
+  street: Yup.string().required(),
+  district: Yup.string().required(),
+  city: Yup.string().required(),
+  state: Yup.string().required()
 });
 
 const DeliverymanEdit = ({ defaultValues }: any) => {
@@ -60,7 +64,10 @@ const DeliverymanEdit = ({ defaultValues }: any) => {
         setValue("state", localInfo.uf);
         setValue("city", localInfo.localidade);
       } catch (error) {
-        // console.error(error);
+        setValue("street", "");
+        setValue("district", "");
+        setValue("state", "");
+        setValue("city", "");
       }
     };
     fn();

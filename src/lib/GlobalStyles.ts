@@ -88,4 +88,7 @@ export const GlobalStyles = createGlobalStyle`
     font-size: 2rem;
     text-align: center;
   }
+  .Toastify__progress-bar.Toastify__progress-bar--animated.Toastify__progress-bar--default {
+    background: white;
+}
 `;

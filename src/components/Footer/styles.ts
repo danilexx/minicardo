@@ -55,6 +55,7 @@ export const Anchor = styled.a`
   color: ${props => darken(0.1, props.theme.white)};
   cursor: pointer;
   font-size: 2rem;
+  text-decoration: none;
   &:hover {
     color: ${props => lighten(0.3, props.theme.primary)};
   }

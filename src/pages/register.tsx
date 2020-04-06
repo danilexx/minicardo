@@ -43,78 +43,81 @@ const schema = Yup.object().shape({
   type: Yup.object().required(),
   cep: Yup.string()
     .min(9)
-    .required()
+    .required(),
+  street: Yup.string().required(),
+  district: Yup.string().required(),
+  city: Yup.string().required(),
+  state: Yup.string().required()
 });
 
 const Register = () => {
   useGuestRoute();
   const routes = useRouter();
-  const [isExpanded, toggle] = useToggle(false);
   const login = useStoreActions(state => state.user.login);
   const methods = useForm({
     validationSchema: schema
   });
-  const { handleSubmit, setValue, watch } = methods;
+  const { handleSubmit, setValue, watch, setError, clearError } = methods;
   const cepValue = watch("cep");
   const type = watch("type");
   const cep = useThrottle(cepValue, 1000);
-  useEffect(() => {
-    const fn = async () => {
+  const fetchCep = React.useCallback(
+    async value => {
       try {
-        if ((cep && cep.length < 9) || !isExpanded) return;
-        const cleanCep = cep.replace("-", "");
+        const cleanCep = value.replace("-", "");
         const { data: localInfo } = await Axios.get(
           `https://viacep.com.br/ws/${cleanCep}/json/`
         );
-        setValue("address.street", localInfo.logradouro);
-        setValue("address.district", localInfo.bairro);
-        setValue("address.state", localInfo.uf);
-        setValue("address.city", localInfo.localidade);
+        setValue("street", localInfo.logradouro);
+        setValue("district", localInfo.bairro);
+        setValue("state", localInfo.uf);
+        setValue("city", localInfo.localidade);
       } catch (error) {
-        console.error(error);
+        setValue("street", "");
+        setValue("district", "");
+        setValue("state", "");
+        setValue("city", "");
       }
+    },
+    [setValue, setError, clearError]
+  );
+  useEffect(() => {
+    const fn = async () => {
+      if (cep && cep.length < 9) return;
+
+      await fetchCep(cep);
     };
     fn();
   }, [cep]);
   const handleAdvance = async data => {
-    if (!isExpanded) {
-      const cleanCep = data.cep.replace("-", "");
-      const { data: localInfo } = await Axios.get(
-        `https://viacep.com.br/ws/${cleanCep}/json/`
-      );
-      setValue("address.street", localInfo.logradouro);
-      setValue("address.district", localInfo.bairro);
-      setValue("address.state", localInfo.uf);
-      setValue("address.city", localInfo.localidade);
-      toggle(true);
-    }
-    if (isExpanded) {
-      try {
-        await ServerUser.register({
-          ...data,
-          type: data.type.value,
-          productType: data.productType?.value || null,
-          address: {
-            ...data.address,
-            cep: data.cep
-          }
-        });
-        const {
-          data: { token }
-        } = await ServerUser.login({
-          email: data.email,
-          password: data.password
-        });
-        setCookie(null, "token", token, {
-          maxAge: 30 * 24 * 60 * 60,
-          path: "/"
-        });
-        routes.push("/");
-        login({ token });
-      } catch (err) {
-        if (err.response?.data?.error) {
-          toast(err.response.data?.error);
+    try {
+      await ServerUser.register({
+        ...data,
+        type: data.type.value,
+        productType: data.productType?.value || null,
+        address: {
+          district: data.district,
+          street: data.street,
+          city: data.city,
+          state: data.state,
+          cep: data.cep
         }
+      });
+      const {
+        data: { token }
+      } = await ServerUser.login({
+        email: data.email,
+        password: data.password
+      });
+      setCookie(null, "token", token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/"
+      });
+      routes.push("/");
+      login({ token });
+    } catch (err) {
+      if (err.response?.data?.error) {
+        toast(err.response.data?.error);
       }
     }
   };
@@ -169,36 +172,12 @@ const Register = () => {
                   type="text"
                 />
                 <MaskedInput mask="99999-999" label="CEP" name="cep" />
-                <HideableSection hidden={!isExpanded}>
-                  <Input
-                    label="Estado"
-                    name="address.state"
-                    disabled
-                    type="text"
-                  />
-                  <Input
-                    label="Cidade"
-                    name="address.city"
-                    disabled
-                    type="text"
-                  />
-                  <Input
-                    label="Bairro"
-                    name="address.district"
-                    disabled
-                    type="text"
-                  />
-                  <Input
-                    label="Rua"
-                    name="address.street"
-                    disabled
-                    type="text"
-                  />
-                </HideableSection>
+                <Input label="Estado" name="state" disabled type="text" />
+                <Input label="Cidade" name="city" disabled type="text" />
+                <Input label="Bairro" name="district" disabled type="text" />
+                <Input label="Rua" name="street" disabled type="text" />
 
-                <Button type="submit">
-                  {isExpanded ? "Cadastrar" : "Avançar"}
-                </Button>
+                <Button type="submit">Cadastrar</Button>
               </form>
             </SideSpace>
             <SideBanner />
