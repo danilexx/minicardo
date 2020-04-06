@@ -19,6 +19,7 @@ import { useStoreState, useStoreActions } from "-/lib/EasyPeasy";
 import { ServerUser } from "-/services";
 import Footer from "-/components/Footer";
 import useGuestRoute from "-/utils/hooks/useGuestRoute";
+import Title from "-/components/Title";
 
 Yup.setLocale({
   mixed: {
@@ -66,6 +67,7 @@ const Login = () => {
   };
   return (
     <>
+      <Title message="Login" />
       <Column style={{ minHeight: "69.5vh" }}>
         <VesgoRow align="flex-start">
           <SideSpace title="Cadastro">

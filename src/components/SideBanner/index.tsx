@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DisplayImage, Container, Bottom, Recs, Rec } from "./styles";
+import { colors } from "-/lib/colors";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -29,7 +30,7 @@ const SideBanner: React.FC<Props> = ({ children, ...props }) => {
     setIndex(index);
   };
   return (
-    <Container {...props}>
+    <Container bgColor={colors[currentIndex]} {...props}>
       <Link href={currentLink} passHref>
         <a target="_blank">
           <DisplayImage src={currentImage} />

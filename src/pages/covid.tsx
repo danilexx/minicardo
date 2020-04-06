@@ -1,7 +1,8 @@
 import Column from "-/components/Colunm";
 import styled from "-/lib/StyledComponents";
+import Title from "-/components/Title";
 
-const Title = styled.h1`
+const Message = styled.h1`
   color: ${props => props.theme.black};
   font-size: 2rem;
   font-weight: bold;
@@ -14,10 +15,14 @@ const Image = styled.img`
 
 const Covid = () => {
   return (
-    <Column>
-      <Title>Dicas de Prevenção do COVID19</Title>
-      <Image src="/images/metodos.png" />
-    </Column>
+    <>
+      <Title message="Dicas de Prevenção do COVID19" />
+
+      <Column>
+        <Message>Dicas de Prevenção do COVID19</Message>
+        <Image src="/images/metodos.png" />
+      </Column>
+    </>
   );
 };
 

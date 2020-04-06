@@ -1,7 +1,6 @@
-import ReactTooltip from "react-tooltip";
 import Banner from "-/components/Banner";
 import SearchSection from "-/components/SearchSection";
-import PostHeader from "-/components/PostHeader";
+import Title from "-/components/Title";
 import Featured from "-/components/Featured";
 import PostCard, { PostCards } from "-/components/PostCard";
 import DeliverymanCard, {
@@ -13,6 +12,7 @@ import Footer from "-/components/Footer";
 const home = ({ trendingPosts, trendingDeliverymans }) => {
   return (
     <>
+      <Title message="Minicardo" />
       <Banner />
       <SearchSection />
       {trendingPosts.length > 0 && (

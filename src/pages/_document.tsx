@@ -17,7 +17,10 @@ class MyDocument extends Document<{
     return (
       // eslint-disable-next-line jsx-a11y/html-has-lang
       <html>
-        <Head>{this.props && this.props.styleTags}</Head>
+        <Head>
+          {this.props && this.props.styleTags}
+          <link rel="shortcut icon" href="/favicon.ico" />
+        </Head>
         <body>
           <Main />
           <NextScript />

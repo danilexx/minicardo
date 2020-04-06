@@ -8,12 +8,14 @@ import DefaultSearchBar from "-/components/SearchBar/default";
 import SideBanner from "-/components/SideBanner";
 import { useStoreState } from "-/lib/EasyPeasy";
 import EditButton from "-/components/EditButton";
+import Title from "-/components/Title";
 
 const Deliveryman = ({ user }) => {
   const { id } = user;
   const userId = useStoreState(state => state.user.id);
   return (
     <Column>
+      <Title message={user.name} />
       <DefaultSearchBar />
       <VesgoRow align="flex-start">
         {/* <PostSection user={user} /> */}
