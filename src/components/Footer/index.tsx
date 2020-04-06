@@ -38,7 +38,7 @@ const Footer = ({ ...props }: any) => {
               {/* <Anchor>Twitter</Anchor> */}
             </Section>
           </Sections>
-          <Copyright href="/services">
+          <Copyright>
             Minicard Copyright 2020 <br />
             Termos e serviços
           </Copyright>
