@@ -34,8 +34,8 @@ const schema = Yup.object().shape({
     .min(9)
     .required(),
   zap: Yup.string()
-    .min(15)
-    .required(),
+    .required()
+    .matches(/\(\d{2,}\) \d{4,}-\d{4}/g, "Não está preenchido"),
   street: Yup.string().required(),
   district: Yup.string().required(),
   city: Yup.string().required(),
