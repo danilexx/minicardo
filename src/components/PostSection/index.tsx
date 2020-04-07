@@ -35,7 +35,9 @@ const PostSection: React.FC<Props> = ({ user }) => {
               {products.map(({ id: productId, name, price }) => (
                 <Row key={productId}>
                   <ProductName>{name}</ProductName>
-                  <ProductPrice>{price}</ProductPrice>
+                  <ProductPrice>
+                    R$ {price.toFixed(2).replace(".", ",")}
+                  </ProductPrice>
                 </Row>
               ))}
             </Rows>

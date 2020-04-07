@@ -16,7 +16,7 @@ const home = ({ trendingPosts, trendingDeliverymans }) => {
       <Banner />
       <SearchSection />
       {trendingPosts.length > 0 && (
-        <Featured label="Comercios Populares" seeMoreLink="/posts">
+        <Featured label="Lojas Populares" seeMoreLink="/posts">
           <PostCards>
             {trendingPosts.map((user, index) => (
               <PostCard key={index} user={user} />

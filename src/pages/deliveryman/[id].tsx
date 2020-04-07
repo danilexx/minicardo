@@ -9,22 +9,26 @@ import SideBanner from "-/components/SideBanner";
 import { useStoreState } from "-/lib/EasyPeasy";
 import EditButton from "-/components/EditButton";
 import Title from "-/components/Title";
+import Footer from "-/components/Footer";
 
 const Deliveryman = ({ user }) => {
   const { id } = user;
   const userId = useStoreState(state => state.user.id);
   return (
-    <Column>
-      <Title message={user.name} />
-      <DefaultSearchBar />
-      <VesgoRow align="flex-start">
-        {/* <PostSection user={user} /> */}
-        <Author user={user}>
-          {id === userId && <EditButton href="/profile" />}
-        </Author>
-        <SideBanner style={{ margin: "1rem 0" }} />
-      </VesgoRow>
-    </Column>
+    <>
+      <Column>
+        <Title message={user.name} />
+        <DefaultSearchBar />
+        <VesgoRow align="flex-start">
+          {/* <PostSection user={user} /> */}
+          <Author user={user}>
+            {id === userId && <EditButton href="/profile" />}
+          </Author>
+          <SideBanner style={{ margin: "1rem 0" }} />
+        </VesgoRow>
+      </Column>
+      <Footer style={{ marginTop: "11.2rem" }} />
+    </>
   );
 };
 
